@@ -45,7 +45,7 @@ public class Reader extends Steganographer {
         boolean messageComplete = false;
         while (i < pixels.length && !messageComplete) {
 
-            buffer[j] = (byte) (pixels[i] % 2);
+            buffer[j] = (byte) ((pixels[i] % 2 + 2) % 2);
 
             i++;
             j++;

@@ -3,9 +3,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -27,23 +25,35 @@ public class Main extends Application {
     public void start(Stage stage) {
 
         BorderPane rootPane = new BorderPane();
-        rootPane.setPadding(new Insets(10, 20, 20, 20));
+        rootPane.setPadding(new Insets(10, 20, 10, 20));
 
-        HBox topMenu = new HBox();
-        topMenu.setAlignment(Pos.CENTER);
-        topMenu.setSpacing(10);
-        topMenu.setPadding(new Insets(0));
-        ToggleButton encodeMode = new ToggleButton("Encode");
+        GridPane topMenuPane = new GridPane();
+        topMenuPane.setAlignment(Pos.TOP_CENTER);
+        topMenuPane.setHgap(10);
+        topMenuPane.setVgap(10);
+
+        ToggleButton encodeMode = new ToggleButton("ENCODE");
         encodeMode.setSelected(true);
-        ToggleButton decodeMode = new ToggleButton("Decode");
+        ToggleButton decodeMode = new ToggleButton("DECODE");
         ToggleGroup modeGroup = new ToggleGroup();
         encodeMode.setToggleGroup(modeGroup);
         decodeMode.setToggleGroup(modeGroup);
-        topMenu.getChildren().addAll(encodeMode, decodeMode);
 
-        rootPane.setTop(topMenu);
+        HBox buttonBox = new HBox();
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setSpacing(10);
+        buttonBox.getChildren().addAll(encodeMode, decodeMode);
 
-        BorderPane.setMargin(topMenu, new Insets(10));
+        topMenuPane.add(buttonBox, 0, 0);
+
+        Separator topSeparator = new Separator();
+        topMenuPane.add(topSeparator, 0, 1);
+
+        BorderPane.setAlignment(topMenuPane, Pos.TOP_CENTER);
+        BorderPane.setMargin(topMenuPane, new Insets(0, 0, 10, 0));
+        rootPane.setTop(topMenuPane);
+
+        topSeparator.prefWidthProperty().bind(rootPane.widthProperty());
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.TOP_CENTER);
@@ -114,7 +124,7 @@ public class Main extends Application {
 
         gridPane.add(inputText, 0, 1, 2, 1);
 
-        Button encodeButton = new Button("ENCODE");
+        Button encodeButton = new Button("START");
         gridPane.add(encodeButton, 0, 2);
 
         encodeButton.setOnMouseClicked(e -> {
@@ -159,11 +169,11 @@ public class Main extends Application {
         decodePane.add(decodeInputPane, 0, 0);
 
         TextArea outputText = new TextArea();
-        outputText.setDisable(true);
+        outputText.setEditable(false);
 
         decodePane.add(outputText, 0, 1);
 
-        Button decodeButton = new Button("DECODE");
+        Button decodeButton = new Button("START");
         decodePane.add(decodeButton, 0, 2);
 
         dOpen.setOnMouseClicked(e -> {
@@ -208,6 +218,7 @@ public class Main extends Application {
         stage.setScene(scene);
 
         stage.setTitle("ImSter");
+        stage.setResizable(false);
         stage.show();
     }
 

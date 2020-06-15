@@ -32,8 +32,15 @@ public class Writer extends Steganographer {
         width = image.getWidth();
         height = image.getHeight();
         pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+
+        System.out.println("Pixels: " + pixels.length);
+        System.out.println("Message: " + this.message.length);
+        if (pixels.length < this.message.length)
+            throw new IOException("Message is too long for this image");
+
         writeToPixels();
         writeImage(outFile);
+
     }
 
     private void writeImage(File outFile) throws IOException {
