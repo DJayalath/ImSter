@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -50,7 +47,6 @@ public class Main extends Application {
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.TOP_CENTER);
-//        gridPane.setPadding(new Insets(10));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
 
@@ -141,6 +137,69 @@ public class Main extends Application {
         rootPane.setCenter(gridPane);
 
         GridPane decodePane = new GridPane();
+        decodePane.setAlignment(Pos.TOP_CENTER);
+        decodePane.setVgap(10);
+        decodePane.setHgap(10);
+
+        GridPane decodeInputPane = new GridPane();
+        decodeInputPane.setAlignment(Pos.CENTER_LEFT);
+        decodeInputPane.setVgap(2);
+        decodeInputPane.setHgap(10);
+
+        TextField dOpenFile = new TextField();
+        dOpenFile.setDisable(true);
+        Label dInputLabel = new Label("Input selection");
+        dInputLabel.setFont(new Font(12.0));
+        Button dOpen = new Button("SELECT");
+
+        decodeInputPane.add(dInputLabel, 0, 0);
+        decodeInputPane.add(dOpenFile, 0, 1);
+        decodeInputPane.add(dOpen, 1, 1);
+
+        decodePane.add(decodeInputPane, 0, 0);
+
+        TextArea outputText = new TextArea();
+        outputText.setDisable(true);
+
+        decodePane.add(outputText, 0, 1);
+
+        Button decodeButton = new Button("DECODE");
+        decodePane.add(decodeButton, 0, 2);
+
+        dOpen.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image File");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
+            File selectedFile = fileChooser.showOpenDialog(stage);
+            if (selectedFile != null) {
+                image = selectedFile;
+                dOpenFile.setText(image.getName());
+                System.out.println("File selected: " + image.getAbsolutePath());
+            } else {
+                image = null;
+            }
+        });
+
+        decodeButton.setOnMouseClicked(e -> {
+            try {
+                Reader reader = new Reader(image);
+                outputText.setText(reader.getDecodedMessage());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Decoding Complete");
+                alert.setHeaderText("Decoding Complete");
+                alert.setContentText("Successfully decoded message in image");
+                alert.showAndWait();
+            } catch (IOException ioException) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Failed to Decode");
+                alert.setHeaderText("Decoding Failed");
+                alert.setContentText(ioException.getMessage());
+                alert.showAndWait();
+            }
+        });
+
+        inputText.setWrapText(true);
+        outputText.setWrapText(true);
 
         encodeMode.setOnMouseClicked(e -> rootPane.setCenter(gridPane));
         decodeMode.setOnMouseClicked(e -> rootPane.setCenter(decodePane));
