@@ -9,12 +9,21 @@ public class Reader extends Steganographer {
 
     private final byte[] pixels;
     private List<Byte> message;
+    private String decodedMessage;
 
     public Reader(File imageFile) throws IOException {
+
+        if (imageFile == null)
+            throw new IOException("No input file selected");
+
         BufferedImage image = ImageIO.read(imageFile);
         pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
         readFromPixels();
         convertToString();
+    }
+
+    public String getDecodedMessage() {
+        return decodedMessage;
     }
 
     private void convertToString() {
@@ -22,7 +31,7 @@ public class Reader extends Steganographer {
         for (byte b : message) {
             stringBuilder.append((char) b);
         }
-        System.out.println(stringBuilder.toString());
+        decodedMessage = stringBuilder.toString();
     }
 
     private void readFromPixels() {

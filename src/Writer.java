@@ -9,7 +9,7 @@ public class Writer extends Steganographer {
 
         File inFile = new File("./bobby.png");
         File outFile = new File("./edited.png");
-        String message = "Hello there!";
+        String message = "General Kenobi. You are a bold one.";
 
         Steganographer writer = new Writer(inFile, outFile, message);
 
@@ -24,6 +24,9 @@ public class Writer extends Steganographer {
 
     public Writer(File imageFile, File outFile, String message) throws IOException {
 
+        if (imageFile == null || outFile == null)
+            throw new IOException("No input or output file selected");
+
         stringToBinaryArray(message + END_CHAR);
         BufferedImage image = ImageIO.read(imageFile);
         width = image.getWidth();
@@ -36,7 +39,7 @@ public class Writer extends Steganographer {
     private void writeImage(File outFile) throws IOException {
 
         DataBuffer buffer = new DataBufferByte(pixels, pixels.length);
-        WritableRaster raster = Raster.createInterleavedRaster(buffer, width, height, 3 * width, 3, new int[] {2, 1, 0}, (Point)null);
+        WritableRaster raster = Raster.createInterleavedRaster(buffer, width, height, 3 * width, 3, new int[] {2, 1, 0}, null);
         ColorModel cm = new ComponentColorModel(ColorModel.getRGBdefault().getColorSpace(), false, true, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
         BufferedImage image = new BufferedImage(cm, raster, true, null);
         ImageIO.write(image, "png", outFile);
@@ -60,7 +63,7 @@ public class Writer extends Steganographer {
 
         char[] messageChars = message.toCharArray();
         for (int i = 0; i < messageChars.length; i++) {
-            asciiToBinary(messageChars[i], this.message, (i * 7) + 6);
+            asciiToBinary(messageChars[i], this.message, (i * BITS_PER_CHAR) + BITS_PER_CHAR - 1);
         }
 
     }
