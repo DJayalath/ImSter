@@ -2,5 +2,6 @@ target
 out
 .idea
 *.png
+!images/*.png
 *.iml
 *.xml
