@@ -1,3 +1,8 @@
+package views;
+
+import cryptography.CryptoDecrypter;
+import cryptography.CryptoException;
+import imageio.ImageReader;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

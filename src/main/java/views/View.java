@@ -1,3 +1,5 @@
+package views;
+
 import javafx.application.Platform;
 import javafx.scene.Parent;
 

@@ -1,7 +1,8 @@
+package cryptography;
+
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
 import java.security.NoSuchAlgorithmException;
 
 /* Class that manages setting up cryptographic resources */

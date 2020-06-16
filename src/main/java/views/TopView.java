@@ -1,3 +1,5 @@
+package views;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-/* GUI View for top menu and JavaFX entry point */
+/* GUI views.View for top menu and JavaFX entry point */
 public class TopView extends Application {
 
     private static final String MAIN_WINDOW_TITLE = "ImSter v0.3 Alpha";
