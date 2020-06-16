@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -129,17 +130,51 @@ public class Main extends Application {
 
         encodeButton.setOnMouseClicked(e -> {
             try {
-                Writer writer = new Writer(image, outImage, inputText.getText());
+                Dialog<String> passDialog = new Dialog<>();
+                passDialog.setTitle("Set Password");
+                passDialog.setHeaderText("Set Encryption Password");
+                passDialog.setContentText("Password:");
+                //passDialog.setGraphic();
+                passDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+                PasswordField pwd = new PasswordField();
+                HBox content = new HBox();
+                content.setAlignment(Pos.CENTER_LEFT);
+                content.setSpacing(10);
+                content.getChildren().addAll(new Label("Password:"), pwd);
+                passDialog.getDialogPane().setContent(content);
+                passDialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == ButtonType.OK) {
+                        return pwd.getText();
+                    }
+                    return null;
+                });
+
+                Optional<String> result = passDialog.showAndWait();
+                String text;
+                if (result.isPresent()) {
+                    try {
+                        Encrypt encrypter = new Encrypt(inputText.getText(), result.get());
+                        text = encrypter.getCiphertext();
+                    } catch (Exception encryptError) {
+                        encryptError.printStackTrace();
+                        throw new Exception(encryptError.getMessage());
+                    }
+                } else {
+                    throw new IOException("Password not set");
+                }
+
+                System.out.println(text);
+                Writer writer = new Writer(image, outImage, text);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Encoding Complete");
                 alert.setHeaderText("Encoding Complete");
                 alert.setContentText("Successfully wrote message in image");
                 alert.showAndWait();
-            } catch (IOException ioException) {
+            } catch (Exception ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Failed to Encode");
                 alert.setHeaderText("Encoding Failed");
-                alert.setContentText(ioException.getMessage());
+                alert.setContentText(ex.getMessage());
                 alert.showAndWait();
             }
         });
@@ -192,14 +227,50 @@ public class Main extends Application {
 
         decodeButton.setOnMouseClicked(e -> {
             try {
+                Dialog<String> passDialog = new Dialog<>();
+                passDialog.setTitle("Enter Password");
+                passDialog.setHeaderText("Enter Decryption Password");
+                passDialog.setContentText("Password:");
+                //passDialog.setGraphic();
+                passDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+                PasswordField pwd = new PasswordField();
+                HBox content = new HBox();
+                content.setAlignment(Pos.CENTER_LEFT);
+                content.setSpacing(10);
+                content.getChildren().addAll(new Label("Password:"), pwd);
+                passDialog.getDialogPane().setContent(content);
+                passDialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == ButtonType.OK) {
+                        return pwd.getText();
+                    }
+                    return null;
+                });
+
+                Optional<String> result = passDialog.showAndWait();
+                String text;
+                if (result.isPresent()) {
+                    text = result.get();
+                } else {
+                    throw new IOException("Password not set");
+                }
+
                 Reader reader = new Reader(image);
-                outputText.setText(reader.getDecodedMessage());
+                String decoded = reader.getDecodedMessage();
+
+                String decryptedText;
+                {
+                    Decrypt decrypter = new Decrypt(decoded, text);
+                    decryptedText = decrypter.getPlaintext();
+                }
+
+                outputText.setText(decryptedText);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Decoding Complete");
                 alert.setHeaderText("Decoding Complete");
                 alert.setContentText("Successfully decoded message in image");
                 alert.showAndWait();
-            } catch (IOException ioException) {
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Failed to Decode");
                 alert.setHeaderText("Decoding Failed");
