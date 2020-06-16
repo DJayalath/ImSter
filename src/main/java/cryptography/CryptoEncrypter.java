@@ -32,7 +32,7 @@ public class CryptoEncrypter extends CryptoResource {
 
             // Generate salt
             SecureRandom randomSecureRandom = SecureRandom.getInstance(RANDOM_SECURE_ALGORITHM);
-            byte[] salt = new byte[8];
+            byte[] salt = new byte[SALT_SIZE];
             randomSecureRandom.nextBytes(salt);
 
             char[] passwordCharArray = password.toCharArray();
