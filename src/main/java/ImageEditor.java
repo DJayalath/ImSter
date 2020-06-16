@@ -8,7 +8,9 @@ import java.io.IOException;
 public class ImageEditor {
 
     protected static final int BITS_PER_CHAR = 7;
-    protected static final char END_CHAR = '\u001b';
+
+    protected static final char START_BYTE = '\u0002';
+    protected static final char END_BYTE = '\u001b';
 
     protected final byte[] pixelBuffer;
 
