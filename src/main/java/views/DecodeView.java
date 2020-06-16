@@ -147,7 +147,7 @@ public class DecodeView extends CodingView {
                         Throwable ex = decodeTask.getException();
                         if (ex instanceof IOException) {
                             runIOExceptionAlert((IOException) ex, "Decode");
-                        } else if (ex instanceof CryptoException) {
+                        } else {
                             handleFatalException(ex);
                         }
                     });

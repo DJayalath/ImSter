@@ -193,7 +193,7 @@ public class EncodeView extends CodingView {
                         Throwable ex = encodeTask.getException();
                         if (ex instanceof IOException) {
                             runIOExceptionAlert((IOException) ex, "Encode");
-                        } else if (ex instanceof CryptoException) {
+                        } else {
                             handleFatalException(ex);
                         }
                     });
