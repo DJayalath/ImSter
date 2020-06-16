@@ -1,3 +1,6 @@
 target
 out
+.idea
 *.png
+*.iml
+*.xml
