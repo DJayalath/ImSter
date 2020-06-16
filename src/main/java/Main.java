@@ -153,8 +153,8 @@ public class Main extends Application {
                 String text;
                 if (result.isPresent()) {
                     try {
-                        Encrypt encrypter = new Encrypt(inputText.getText(), result.get());
-                        text = encrypter.getCiphertext();
+                        CryptoEncrypter encrypter = new CryptoEncrypter();
+                        text = encrypter.encryptString(inputText.getText(), result.get());
                     } catch (Exception encryptError) {
                         encryptError.printStackTrace();
                         throw new Exception(encryptError.getMessage());
@@ -163,14 +163,15 @@ public class Main extends Application {
                     throw new IOException("Password not set");
                 }
 
-                System.out.println(text);
-                Writer writer = new Writer(image, outImage, text);
+                ImageWriter imageWriter = new ImageWriter(image, outImage);
+                imageWriter.writeString(text);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Encoding Complete");
                 alert.setHeaderText("Encoding Complete");
                 alert.setContentText("Successfully wrote message in image");
                 alert.showAndWait();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Failed to Encode");
                 alert.setHeaderText("Encoding Failed");
@@ -254,13 +255,13 @@ public class Main extends Application {
                     throw new IOException("Password not set");
                 }
 
-                Reader reader = new Reader(image);
-                String decoded = reader.getDecodedMessage();
+                ImageReader imageReader = new ImageReader(image);
+                String decoded = imageReader.readString();
 
                 String decryptedText;
                 {
-                    Decrypt decrypter = new Decrypt(decoded, text);
-                    decryptedText = decrypter.getPlaintext();
+                    CryptoDecrypter decrypter = new CryptoDecrypter();
+                    decryptedText = decrypter.decryptString(decoded, text);
                 }
 
                 outputText.setText(decryptedText);
