@@ -24,11 +24,12 @@ public class EncodeView extends View {
 
     private final GridPane root;
 
-    private File imageIn = null;
     private File imageOut = null;
 
     /* Sets up encode view */
     public EncodeView(Stage stage) {
+
+        super(stage);
 
         root = new GridPane();
 
@@ -73,20 +74,7 @@ public class EncodeView extends View {
         root.add(inputSelectionPane, 0, 0);
         root.add(outputSelectionPane, 1, 0);
 
-        imageInSelectButton.setOnMouseClicked(e -> {
-
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Image File");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("PNG Files", "*.png"));
-            File selectedFile = fileChooser.showOpenDialog(stage);
-
-            if (selectedFile != null) {
-                imageIn = selectedFile;
-                imageInText.setText(imageIn.getName());
-            }
-
-        });
+        imageInSelectButton.setOnMouseClicked(e -> runFileInputDialog(imageInText));
 
         imageOutSelectButton.setOnMouseClicked(e -> {
 
@@ -199,9 +187,12 @@ public class EncodeView extends View {
 
                     encodeTask.setOnFailed(t -> {
                         root.setDisable(false);
+                        progressBar.progressProperty().unbind();
+                        progressBar.setProgress(0);
+                        progressBar.setDisable(true);
                         Throwable ex = encodeTask.getException();
                         if (ex instanceof IOException) {
-                            runIOExceptionAlert((IOException) ex);
+                            runIOExceptionAlert((IOException) ex, "Encode");
                         } else if (ex instanceof CryptoException) {
                             handleFatalException(ex);
                         }
@@ -226,7 +217,7 @@ public class EncodeView extends View {
 
             } catch (IOException ioException) {
 
-                runIOExceptionAlert(ioException);
+                runIOExceptionAlert(ioException, "Encode");
 
             }
 

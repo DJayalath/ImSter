@@ -24,10 +24,10 @@ public class DecodeView extends View {
 
     private final GridPane root;
 
-    private File imageIn = null;
-
     /* Sets up decode view */
     public DecodeView(Stage stage) {
+
+        super(stage);
 
         root = new GridPane();
 
@@ -54,20 +54,7 @@ public class DecodeView extends View {
 
         root.add(inputSelectionPane, 0, 0);
 
-        imageInSelectButton.setOnMouseClicked(e -> {
-
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Image File");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("PNG Files", "*.png"));
-            File selectedFile = fileChooser.showOpenDialog(stage);
-
-            if (selectedFile != null) {
-                imageIn = selectedFile;
-                imageInText.setText(imageIn.getName());
-            }
-
-        });
+        imageInSelectButton.setOnMouseClicked(e -> runFileInputDialog(imageInText));
 
         TextArea outputTextArea = new TextArea();
         outputTextArea.setEditable(false);
@@ -156,9 +143,12 @@ public class DecodeView extends View {
 
                     decodeTask.setOnFailed(t -> {
                         root.setDisable(false);
+                        progressBar.progressProperty().unbind();
+                        progressBar.setProgress(0);
+                        progressBar.setDisable(true);
                         Throwable ex = decodeTask.getException();
                         if (ex instanceof IOException) {
-                            runIOExceptionAlert((IOException) ex);
+                            runIOExceptionAlert((IOException) ex, "Decode");
                         } else if (ex instanceof CryptoException) {
                             handleFatalException(ex);
                         }
