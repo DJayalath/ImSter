@@ -4,7 +4,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.security.NoSuchAlgorithmException;
 
 /* Class that manages setting up cryptographic resources */
-public class CryptoResource {
+public abstract class CryptoResource {
 
     // 16-byte initialisation vector for cipher (TODO: Make this more secure)
     private static final String INIT_VECTOR = "qwertyuiopasdfgh";
@@ -31,12 +31,6 @@ public class CryptoResource {
         while (keyBuilder.length() < 16)
             keyBuilder.append(" ");
         return keyBuilder.toString();
-    }
-
-    public static class CryptoException extends Exception {
-        public CryptoException(String message) {
-            super(message);
-        }
     }
 
 }
