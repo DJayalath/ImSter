@@ -6,17 +6,13 @@ import java.security.NoSuchAlgorithmException;
 /* Class that manages setting up cryptographic resources */
 public abstract class CryptoResource {
 
-    // 16-byte initialisation vector for cipher (TODO: Make this more secure)
-    private static final String INIT_VECTOR = "qwertyuiopasdfgh";
-
+    protected static final int INIT_VECTOR_SIZE = 16;
     private static final String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5PADDING";
-    protected final IvParameterSpec ivParameterSpec;
     protected final Cipher cipher;
 
     /* Initialises cryptographic resources */
     public CryptoResource() throws CryptoException {
         try {
-            ivParameterSpec = new IvParameterSpec(INIT_VECTOR.getBytes());
             cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
         } catch (NoSuchAlgorithmException e) {
             throw new CryptoException("Algorithm not found for " + CIPHER_TRANSFORMATION);
