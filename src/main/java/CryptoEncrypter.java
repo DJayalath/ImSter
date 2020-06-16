@@ -19,7 +19,7 @@ public class CryptoEncrypter extends CryptoResource {
     /* Encrypts plaintext string with password */
     public String encryptString(String plaintext, String password) throws IOException, CryptoException {
 
-        if (plaintext == null)
+        if (plaintext.isEmpty())
             throw new IOException("Missing message to encrypt");
 
         String key = padPasswordTo16Bytes(password);
