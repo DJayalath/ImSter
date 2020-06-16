@@ -37,9 +37,11 @@ public abstract class CodingView {
     /* Handles fatal exceptions within Application thread */
     protected void handleFatalException(Throwable e) {
         System.out.println("FATAL ERROR: " + e.getMessage());
-        System.out.println("\nINIT CAUSE: " + e.getCause().getMessage());
+        if (e.getCause() != null)
+            System.out.println("\nINIT CAUSE: " + e.getCause().getMessage());
         System.out.println("\n----- STACK TRACE -----");
         e.printStackTrace();
+        stage.close();
         Platform.exit();
         System.exit(1);
     }
