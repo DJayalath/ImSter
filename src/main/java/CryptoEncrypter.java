@@ -1,13 +1,15 @@
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
+import java.security.spec.KeySpec;
 import java.util.Base64;
 
 /* Class that manages AES String-based password encryption of plaintext strings */
@@ -24,35 +26,38 @@ public class CryptoEncrypter extends CryptoResource {
         if (plaintext.isEmpty())
             throw new IOException("Missing message to encrypt");
 
-
-        String key = padPasswordTo16Bytes(password);
-
         try {
 
-            // Initialise key and cipher
+            // Generate salt
+            SecureRandom randomSecureRandom = SecureRandom.getInstance(RANDOM_SECURE_ALGORITHM);
+            byte[] salt = new byte[8];
+            randomSecureRandom.nextBytes(salt);
+
+            char[] passwordCharArray = password.toCharArray();
+
+            // Derive key given password and salt
+            KeySpec spec = new PBEKeySpec(passwordCharArray, salt, ITERATION_COUNT, KEY_LENGTH);
+            SecretKey tmp = secretKeyFactory.generateSecret(spec);
+            SecretKey secret = new SecretKeySpec(tmp.getEncoded(), KEY_SPEC_ALGORITHM);
+
+            // Initialise cipher and initialisation vector
+            cipher.init(Cipher.ENCRYPT_MODE, secret);
             byte[] iv = cipher.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
-            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
 
             // Encrypt plaintext
             byte[] encrypted = cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));
 
-            // Copy initialisation vector to front
-            byte[] encryptedWithIV = new byte[encrypted.length + INIT_VECTOR_SIZE];
-            System.arraycopy(iv, 0, encryptedWithIV, 0, INIT_VECTOR_SIZE);
-            System.arraycopy(encrypted, 0, encryptedWithIV, INIT_VECTOR_SIZE, encrypted.length);
+            // Copy salt and initialisation vector to front
+            byte[] encryptedWithSaltAndIV = new byte[encrypted.length + SALT_SIZE + INIT_VECTOR_SIZE];
+            System.arraycopy(salt, 0, encryptedWithSaltAndIV, 0, SALT_SIZE);
+            System.arraycopy(iv, 0, encryptedWithSaltAndIV, SALT_SIZE, INIT_VECTOR_SIZE);
+            System.arraycopy(encrypted, 0, encryptedWithSaltAndIV, SALT_SIZE + INIT_VECTOR_SIZE, encrypted.length);
 
             // Return Base64 encoded ciphertext
-            return Base64.getEncoder().encodeToString(encryptedWithIV);
+            return Base64.getEncoder().encodeToString(encryptedWithSaltAndIV);
 
         } catch (InvalidKeyException e) {
             CryptoException cryptoException = new CryptoException("Invalid key supplied");
-            cryptoException.initCause(e);
-            throw cryptoException;
-        } catch (InvalidAlgorithmParameterException e) {
-            CryptoException cryptoException = new CryptoException(
-                    "Invalid algorithm parameters supplied (Check initialisation vector");
             cryptoException.initCause(e);
             throw cryptoException;
         } catch (InvalidParameterSpecException e) {
@@ -66,6 +71,14 @@ public class CryptoEncrypter extends CryptoResource {
             throw cryptoException;
         } catch (BadPaddingException e) {
             CryptoException cryptoException = new CryptoException("Plaintext has pad padding");
+            cryptoException.initCause(e);
+            throw cryptoException;
+        } catch (InvalidKeySpecException e) {
+            CryptoException cryptoException = new CryptoException("Invalid key specification supplied");
+            cryptoException.initCause(e);
+            throw cryptoException;
+        } catch (NoSuchAlgorithmException e) {
+            CryptoException cryptoException = new CryptoException("No such algorithm for secure random");
             cryptoException.initCause(e);
             throw cryptoException;
         }
