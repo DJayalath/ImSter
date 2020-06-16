@@ -4,11 +4,13 @@ import cryptography.CryptoDecrypter;
 import cryptography.CryptoException;
 import imageio.ImageReader;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -74,7 +76,19 @@ public class DecodeView extends View {
         root.add(outputTextArea, 0, 1);
 
         Button startButton = new Button("START");
-        root.add(startButton, 0, 2);
+
+        HBox progressBox = new HBox();
+        progressBox.setAlignment(Pos.CENTER);
+        progressBox.setSpacing(10);
+
+        ProgressBar progressBar = new ProgressBar(0);
+        progressBar.setMaxWidth(Double.MAX_VALUE);
+        progressBar.setDisable(true);
+
+        HBox.setHgrow(progressBar, Priority.ALWAYS);
+        progressBox.getChildren().addAll(startButton, progressBar);
+
+        root.add(progressBox, 0, 2, 2, 1);
 
         startButton.setOnMouseClicked(e -> {
             try {
@@ -105,21 +119,64 @@ public class DecodeView extends View {
                 Optional<String> result = passDialog.showAndWait();
                 if (result.isPresent()) {
 
-                    String password = result.get();
+                    Task<Void> decodeTask = new Task<>() {
 
-                    ImageReader imageReader = new ImageReader(imageIn);
-                    String decodedMessage = imageReader.readString();
+                        @Override
+                        protected Void call() throws IOException, CryptoException {
 
-                    CryptoDecrypter cryptoDecrypter = new CryptoDecrypter();
-                    String decryptedMessage = cryptoDecrypter.decryptString(decodedMessage, password);
+                            updateProgress(0.1, 1.0);
+                            String password = result.get();
+                            updateProgress(0.2, 1.0);
 
-                    outputTextArea.setText(decryptedMessage);
+                            ImageReader imageReader = new ImageReader(imageIn);
+                            updateProgress(0.4, 1.0);
 
-                    Alert decodeSuccessAlert = new Alert(Alert.AlertType.INFORMATION);
-                    decodeSuccessAlert.setTitle("Decoding Complete");
-                    decodeSuccessAlert.setHeaderText("Decoding Complete");
-                    decodeSuccessAlert.setContentText("Successfully decoded message in image");
-                    decodeSuccessAlert.showAndWait();
+                            String decodedMessage = imageReader.readString();
+                            updateProgress(0.6, 1.0);
+
+                            CryptoDecrypter cryptoDecrypter = new CryptoDecrypter();
+                            updateProgress(0.8, 1.0);
+
+                            String decryptedMessage = cryptoDecrypter.decryptString(decodedMessage, password);
+                            outputTextArea.setText(decryptedMessage);
+                            updateProgress(1.0, 1.0);
+
+                            return null;
+                        }
+                    };
+
+                    progressBar.progressProperty().bind(decodeTask.progressProperty());
+
+                    new Thread(decodeTask).start();
+
+                    decodeTask.setOnRunning(t -> {
+                        root.setDisable(true);
+                        progressBar.setDisable(false);
+                    });
+
+                    decodeTask.setOnFailed(t -> {
+                        root.setDisable(false);
+                        Throwable ex = decodeTask.getException();
+                        if (ex instanceof IOException) {
+                            runIOExceptionAlert((IOException) ex);
+                        } else if (ex instanceof CryptoException) {
+                            handleFatalException(ex);
+                        }
+                    });
+
+                    decodeTask.setOnSucceeded(t -> {
+                        root.setDisable(false);
+                        progressBar.progressProperty().unbind();
+                        progressBar.setProgress(1.0);
+                        Alert decodeSuccessAlert = new Alert(Alert.AlertType.INFORMATION);
+                        decodeSuccessAlert.setTitle("Decoding Complete");
+                        decodeSuccessAlert.setHeaderText("Decoding Complete");
+                        decodeSuccessAlert.setContentText("Successfully decoded message in image");
+                        decodeSuccessAlert.showAndWait();
+                        progressBar.setProgress(0);
+                        progressBar.setDisable(true);
+                    });
+
                 } else {
                     throw new IOException("Password not set");
                 }
@@ -132,8 +189,6 @@ public class DecodeView extends View {
                 ioExceptionAlert.setContentText(ioException.getMessage());
                 ioExceptionAlert.showAndWait();
 
-            } catch (CryptoException cryptoException) {
-                handleFatalException(cryptoException);
             }
         });
 

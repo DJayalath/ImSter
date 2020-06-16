@@ -4,11 +4,13 @@ import cryptography.CryptoEncrypter;
 import cryptography.CryptoException;
 import imageio.ImageWriter;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -118,7 +120,19 @@ public class EncodeView extends View {
         root.add(inputTextArea, 0, 1, 2, 1);
 
         Button startButton = new Button("START");
-        root.add(startButton, 0, 2);
+
+        HBox progressBox = new HBox();
+        progressBox.setAlignment(Pos.CENTER);
+        progressBox.setSpacing(10);
+
+        ProgressBar progressBar = new ProgressBar(0);
+        progressBar.setMaxWidth(Double.MAX_VALUE);
+        progressBar.setDisable(true);
+
+        HBox.setHgrow(progressBar, Priority.ALWAYS);
+        progressBox.getChildren().addAll(startButton, progressBar);
+
+        root.add(progressBox, 0, 2, 2, 1);
 
         startButton.setOnMouseClicked(e ->  {
             try {
@@ -149,19 +163,62 @@ public class EncodeView extends View {
                 Optional<String> result = passDialog.showAndWait();
                 if (result.isPresent()) {
 
-                    String password = result.get();
+                    Task<Void> encodeTask = new Task<>() {
 
-                    CryptoEncrypter cryptoEncrypter = new CryptoEncrypter();
-                    String encryptedMessage = cryptoEncrypter.encryptString(inputTextArea.getText(), password);
+                        @Override
+                        protected Void call() throws IOException, CryptoException {
 
-                    ImageWriter imageWriter = new ImageWriter(imageIn, imageOut);
-                    imageWriter.writeString(encryptedMessage);
+                            updateProgress(0.1, 1.0);
+                            String password = result.get();
+                            updateProgress(0.2, 1.0);
 
-                    Alert encodeSuccessAlert = new Alert(Alert.AlertType.INFORMATION);
-                    encodeSuccessAlert.setTitle("Encoding Complete");
-                    encodeSuccessAlert.setHeaderText("Encoding Complete");
-                    encodeSuccessAlert.setContentText("Successfully wrote message in image");
-                    encodeSuccessAlert.showAndWait();
+                            CryptoEncrypter cryptoEncrypter = new CryptoEncrypter();
+                            updateProgress(0.4, 1.0);
+
+                            String encryptedMessage = cryptoEncrypter.encryptString(inputTextArea.getText(), password);
+                            updateProgress(0.6, 1.0);
+
+                            ImageWriter imageWriter = new ImageWriter(imageIn, imageOut);
+                            updateProgress(0.8, 1.0);
+
+                            imageWriter.writeString(encryptedMessage);
+                            updateProgress(1.0, 1.0);
+
+                            return null;
+                        }
+                    };
+
+                    progressBar.progressProperty().bind(encodeTask.progressProperty());
+
+                    new Thread(encodeTask).start();
+
+                    encodeTask.setOnRunning(t -> {
+                        root.setDisable(true);
+                        progressBar.setDisable(false);
+                    });
+
+                    encodeTask.setOnFailed(t -> {
+                        root.setDisable(false);
+                        Throwable ex = encodeTask.getException();
+                        if (ex instanceof IOException) {
+                            runIOExceptionAlert((IOException) ex);
+                        } else if (ex instanceof CryptoException) {
+                            handleFatalException(ex);
+                        }
+                    });
+
+                    encodeTask.setOnSucceeded(t -> {
+                        root.setDisable(false);
+                        progressBar.progressProperty().unbind();
+                        progressBar.setProgress(1.0);
+                        Alert encodeSuccessAlert = new Alert(Alert.AlertType.INFORMATION);
+                        encodeSuccessAlert.setTitle("Encoding Complete");
+                        encodeSuccessAlert.setHeaderText("Encoding Complete");
+                        encodeSuccessAlert.setContentText("Successfully wrote message in image");
+                        encodeSuccessAlert.showAndWait();
+                        progressBar.setProgress(0);
+                        progressBar.setDisable(true);
+                    });
 
                 } else {
                     throw new IOException("Password not set");
@@ -169,15 +226,10 @@ public class EncodeView extends View {
 
             } catch (IOException ioException) {
 
-                Alert ioExceptionAlert = new Alert(Alert.AlertType.ERROR);
-                ioExceptionAlert.setTitle("Failed to Encode");
-                ioExceptionAlert.setHeaderText("Encoding Failed");
-                ioExceptionAlert.setContentText(ioException.getMessage());
-                ioExceptionAlert.showAndWait();
+                runIOExceptionAlert(ioException);
 
-            } catch (CryptoException cryptoException) {
-                handleFatalException(cryptoException);
             }
+
         });
 
     }
