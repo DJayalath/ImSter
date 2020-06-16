@@ -20,11 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d138d48-b765-48a8-9d60-5d0f01ebc3f7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Steganographer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Steganographer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Writer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Decrypt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Encrypt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,5 +116,9 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="763" y="276" width="1024" height="840" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1592265338178" />
+    <state x="875" y="435" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1592266546392">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="875" y="435" width="800" height="523" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1592266546392" />
   </component>
 </project>
