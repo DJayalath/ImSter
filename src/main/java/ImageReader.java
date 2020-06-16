@@ -42,6 +42,8 @@ public class ImageReader extends ImageEditor {
         // Indicates whether message end character is found
         boolean messageComplete = false;
 
+        boolean firstByte = true;
+
         while (i < pixelBuffer.length && !messageComplete) {
 
             // Read binary value from pixel
@@ -54,10 +56,18 @@ public class ImageReader extends ImageEditor {
             if (j > BITS_PER_CHAR - 1) {
                 j = 0;
                 byte b = binaryToAscii(buffer);
-                if (b == END_CHAR)
-                    messageComplete = true;
-                else {
-                    messageBuffer.add(b);
+
+                // Break if starting byte not found
+                if (firstByte) {
+                    firstByte = false;
+                    if (b != START_BYTE)
+                        break;
+                } else {
+                    if (b == END_BYTE)
+                        messageComplete = true;
+                    else {
+                        messageBuffer.add(b);
+                    }
                 }
             }
 
