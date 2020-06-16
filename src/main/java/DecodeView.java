@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -80,6 +81,7 @@ public class DecodeView extends View {
                 passDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
                 PasswordField pwd = new PasswordField();
+                Platform.runLater(pwd::requestFocus);
 
                 HBox content = new HBox();
                 content.setAlignment(Pos.CENTER_LEFT);
