@@ -2,7 +2,9 @@
 
 ImSter is a tool that lets you hide and view text inside images securely. 
 
-![Main view of GUI](images/mainView.png)
+<p align="center">
+<img src="images/mainView.png" alt="Main GUI view">
+ </p>
 
 Text is password encrypted using 256-bit AES and encoded into the pixels of the image themselves
 rather than any metadata. It is impossible for anyone to even know that there is hidden content within
