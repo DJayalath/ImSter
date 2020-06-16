@@ -26,9 +26,6 @@ public class CryptoDecrypter extends CryptoResource {
     /* Decrypts plaintext string with password */
     public String decryptString(String ciphertext, String password) throws IOException, CryptoException {
 
-        if (ciphertext == null)
-            throw new IOException("Missing message to decrypt");
-
         try {
 
             // B64 decode the ciphertext
@@ -36,7 +33,8 @@ public class CryptoDecrypter extends CryptoResource {
 
             // Extract the message fragment
             byte[] encryptedMessage = new byte[decoded.length - SALT_SIZE - INIT_VECTOR_SIZE];
-            System.arraycopy(decoded, SALT_SIZE + INIT_VECTOR_SIZE, encryptedMessage, 0,decoded.length - SALT_SIZE - INIT_VECTOR_SIZE);
+            System.arraycopy(decoded, SALT_SIZE + INIT_VECTOR_SIZE, encryptedMessage, 0,
+                    decoded.length - SALT_SIZE - INIT_VECTOR_SIZE);
 
             // Extract the initialisation vector fragment
             byte[] iv = new byte[INIT_VECTOR_SIZE];
