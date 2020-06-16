@@ -19,7 +19,7 @@ public class ImageEditor {
     public ImageEditor(File imageFile) throws IOException {
 
         if (imageFile == null)
-            throw new IOException("Missing image file");
+            throw new IOException("Missing path for input image");
 
         BufferedImage image = ImageIO.read(imageFile);
         imageWidth = image.getWidth();
