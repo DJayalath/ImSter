@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+/* GUI View for top menu and JavaFX entry point */
 public class TopView extends Application {
 
     private static final String MAIN_WINDOW_TITLE = "ImSter v0.3 Alpha";
@@ -29,10 +30,27 @@ public class TopView extends Application {
         topMenuPane.setHgap(10);
         topMenuPane.setVgap(10);
 
-        ToggleButton encodeMode = new ToggleButton("ENCODE");
+        /* Custom toggle button class ensures one member of the toggle group is always toggled on.
+         A button can't be un-toggled by pressing it while toggled */
+        class PersistentToggleButton extends ToggleButton {
+            public PersistentToggleButton(String label) {
+                super(label);
+            }
+
+            @Override
+            public void fire() {
+                // Don't un-toggle if selected
+                if (getToggleGroup() == null || !isSelected()) {
+                    super.fire();
+                }
+            }
+        }
+
+        ToggleButton encodeMode = new PersistentToggleButton("ENCODE");
         encodeMode.setSelected(true);
-        ToggleButton decodeMode = new ToggleButton("DECODE");
+        ToggleButton decodeMode = new PersistentToggleButton("DECODE");
         ToggleGroup modeGroup = new ToggleGroup();
+        modeGroup.selectToggle(encodeMode);
         encodeMode.setToggleGroup(modeGroup);
         decodeMode.setToggleGroup(modeGroup);
 
