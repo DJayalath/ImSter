@@ -73,7 +73,7 @@ public class DecodeView extends View {
         outputTextArea.setEditable(false);
         outputTextArea.setWrapText(true);
 
-        root.add(outputTextArea, 0, 1);
+        root.add(outputTextArea, 0, 1, 2, 1);
 
         Button startButton = new Button("START");
 
