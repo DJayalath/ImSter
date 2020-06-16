@@ -12,15 +12,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
 /* GUI view for decoding images */
-public class DecodeView extends View {
+public class DecodeView extends CodingView {
 
     private final GridPane root;
 

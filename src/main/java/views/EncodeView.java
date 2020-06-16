@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 /* GUI view for encoding images */
-public class EncodeView extends View {
+public class EncodeView extends CodingView {
 
     private final GridPane root;
 

@@ -72,8 +72,8 @@ public class TopView extends Application {
 
         topSeparator.prefWidthProperty().bind(rootPane.widthProperty());
 
-        View encodeView = new EncodeView(stage);
-        View decodeView = new DecodeView(stage);
+        CodingView encodeView = new EncodeView(stage);
+        CodingView decodeView = new DecodeView(stage);
 
         rootPane.setCenter(encodeView.getRoot());
 

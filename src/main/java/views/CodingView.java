@@ -11,12 +11,12 @@ import java.io.File;
 import java.io.IOException;
 
 /* Class for abstract JavaFX views */
-public abstract class View {
+public abstract class CodingView {
 
     protected final Stage stage;
     protected File imageIn = null;
 
-    public View(Stage stage) {
+    public CodingView(Stage stage) {
         this.stage = stage;
     }
 
