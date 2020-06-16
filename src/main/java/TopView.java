@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class TopView extends Application {
 
-    private static final String MAIN_WINDOW_TITLE = "ImSter v0.2 Alpha";
+    private static final String MAIN_WINDOW_TITLE = "ImSter v0.3 Alpha";
 
     public static void initialise(String[] args) {
         launch(args);
