@@ -24,7 +24,7 @@ public class ImageWriter extends ImageEditor {
 
     /* Writes supplied message into pixel buffer and saves image to destination file */
     public void writeString(String message) throws IOException {
-        stringToBinaryArray(message + END_CHAR);
+        stringToBinaryArray(START_BYTE + message + END_BYTE);
         writeToPixelBuffer();
         writeImage();
     }
