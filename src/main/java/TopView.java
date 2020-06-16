@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 public class TopView extends Application {
 
+    private static final String MAIN_WINDOW_TITLE = "ImSter v0.2 Alpha";
+
     public static void initialise(String[] args) {
         launch(args);
     }
@@ -61,7 +63,7 @@ public class TopView extends Application {
         Scene scene = new Scene(rootPane);
         stage.setScene(scene);
 
-        stage.setTitle("ImSter");
+        stage.setTitle(MAIN_WINDOW_TITLE);
         stage.setResizable(false);
 
         stage.show();
