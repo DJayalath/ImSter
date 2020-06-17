@@ -33,20 +33,7 @@ public class ImageWriter extends ImageEditor {
 
     /* Writes pixel buffer to destination file */
     private void writeImage() throws IOException {
-
-        DataBuffer buffer = new DataBufferByte(pixelBuffer, pixelBuffer.length);
-
-        WritableRaster raster = Raster.createInterleavedRaster(
-                buffer, imageWidth, imageHeight, 3 * imageWidth,
-                3, new int[] {2, 1, 0}, null);
-
-        ColorModel cm = new ComponentColorModel(
-                ColorModel.getRGBdefault().getColorSpace(), false,
-                true, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
-
-        BufferedImage image = new BufferedImage(cm, raster, true, null);
         ImageIO.write(image, "png", imageOut);
-
     }
 
     /* Modifies pixel buffer to insert the message */
