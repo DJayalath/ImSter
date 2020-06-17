@@ -151,7 +151,7 @@ public class EncodeView extends CodingView {
                 Optional<String> result = passDialog.showAndWait();
                 if (result.isPresent()) {
 
-                    Task<Void> encodeTask = new Task<>() {
+                    Task<Void> encodeTask = new Task<Void>() {
 
                         @Override
                         protected Void call() throws IOException, CryptoException {
