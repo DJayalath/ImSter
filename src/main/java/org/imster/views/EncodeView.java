@@ -176,11 +176,11 @@ public class EncodeView extends CodingView {
                         }
                     };
 
-                    progressBar.progressProperty().bind(encodeTask.progressProperty());
 
                     new Thread(encodeTask).start();
 
                     encodeTask.setOnRunning(t -> {
+                        progressBar.progressProperty().bind(encodeTask.progressProperty());
                         root.setDisable(true);
                         progressBar.setDisable(false);
                     });

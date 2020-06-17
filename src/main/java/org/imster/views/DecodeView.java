@@ -130,11 +130,10 @@ public class DecodeView extends CodingView {
                         }
                     };
 
-                    progressBar.progressProperty().bind(decodeTask.progressProperty());
-
                     new Thread(decodeTask).start();
 
                     decodeTask.setOnRunning(t -> {
+                        progressBar.progressProperty().bind(decodeTask.progressProperty());
                         root.setDisable(true);
                         progressBar.setDisable(false);
                     });
