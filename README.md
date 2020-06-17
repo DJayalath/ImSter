@@ -10,6 +10,15 @@ Text is password encrypted using 256-bit AES and encoded into the pixels of the 
 rather than any metadata. It is impossible for anyone to even know that there is hidden content within
 an image.
 
+## Contents
+- [Demo](#demo)
+- [Features](#features)
+- [Purpose](#purpose)
+- [Quick Start](#quick-start)
+- [Command Line Interface (CLI)](#command-line-interface-cli)
+- [Requirements](#requirements)
+- [License](#license)
+
 ## Demo
 The image on the right contains the entirety of Shakespeare's Macbeth encrypted and hidden in its pixels.
 
