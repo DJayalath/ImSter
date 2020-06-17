@@ -42,7 +42,7 @@ public class ImageWriter extends ImageEditor {
         for (int i = 0; i < messageBuffer.length; i++) {
 
             // Pixel value is rounded down to nearest multiple of 2 in order to store binary data
-            pixelBuffer[i] -= pixelBuffer[i] % 2;
+            pixelBuffer[i] -= ((pixelBuffer[i] % 2) + 2) % 2;
 
             pixelBuffer[i] += messageBuffer[i];
 
