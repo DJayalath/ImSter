@@ -54,7 +54,6 @@ class MainTest {
     }
 
     @Test
-    @Disabled
     void writeReadImageRGBA() {
 
         try {
@@ -97,7 +96,6 @@ class MainTest {
     }
 
     @Test
-    @Disabled
     void writeReadImageInterlaced() {
 
         try {
@@ -106,6 +104,28 @@ class MainTest {
             String encrypted = cryptoEncrypter.encryptString(message, password);
             imageWriter.writeString(encrypted);
             imageReader = new ImageReader(new File(resourceDirectory + "/interlacedOUT.png"));
+            String decoded = imageReader.readString();
+            cryptoDecrypter = new CryptoDecrypter();
+            String decrypted = cryptoDecrypter.decryptString(decoded, password);
+            assertEquals(message, decrypted);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+
+    }
+
+    @Test
+    void writeReadImageIndexed() {
+
+        try {
+            String message = MainTest.message.substring(0, MainTest.message.length() / 64);
+
+            cryptoEncrypter = new CryptoEncrypter();
+            imageWriter = new ImageWriter(new File(resourceDirectory + "/indexed.png"), new File(resourceDirectory + "/indexedOUT.png"));
+            String encrypted = cryptoEncrypter.encryptString(message, password);
+            imageWriter.writeString(encrypted);
+            imageReader = new ImageReader(new File(resourceDirectory + "/indexedOUT.png"));
             String decoded = imageReader.readString();
             cryptoDecrypter = new CryptoDecrypter();
             String decrypted = cryptoDecrypter.decryptString(decoded, password);
