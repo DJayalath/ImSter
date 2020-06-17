@@ -1,8 +1,6 @@
 package org.imster.imageio;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.*;
 import java.io.*;
 
 /* Class that manages writing strings to image files */
@@ -42,7 +40,8 @@ public class ImageWriter extends ImageEditor {
         for (int i = 0; i < messageBuffer.length; i++) {
 
             // Pixel value is rounded down to nearest multiple of 2 in order to store binary data
-            pixelBuffer[i] -= ((pixelBuffer[i] % 2) + 2) % 2;
+            // i.e. LSB is set to 0
+            pixelBuffer[i] &= ~1;
 
             pixelBuffer[i] += messageBuffer[i];
 

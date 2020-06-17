@@ -48,8 +48,8 @@ public class ImageReader extends ImageEditor {
 
         while (i < pixelBuffer.length && !messageComplete) {
 
-            // Read binary value from pixel
-            buffer[j] = (byte) ((pixelBuffer[i] % 2 + 2) % 2);
+            // Read LSB from pixel
+            buffer[j] = (byte) (pixelBuffer[i] & 1);
 
             i++;
             j++;
