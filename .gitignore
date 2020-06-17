@@ -2,7 +2,15 @@ target
 out
 .idea
 *.png
+
+# Don't ignore repo images
 !images/*.png
+
+# Don't ignore test sources
 !src/test/resources/*.png
+
+# Ignore converted versions in test resources
+*OUT.png
+
 *.iml
 *.xml
