@@ -34,6 +34,17 @@ While many solutions exist for securely encrypting data, ImSter serves a slightl
 
 *For compatibility, please download [older releases](https://github.com/armytricks/ImSter/releases)
 
+## Command Line Interface (CLI)
+
+ImSter v0.4.3+ comes integrated with a CLI. To use it, specify commands as follows:
+
+#### Encoding
+`java -jar ImSter-xxx.jar encode -i input.png -o output.png -m "message" -p password`
+#### Decoding
+`java -jar ImSter-xxx.jar decode -i input.png -p password`
+
+The decoded message goes to stdout. Any errors encountered will be sent to stderr.
+
 ## Requirements
 
 - Operating System: Windows/Linux/Mac OS
