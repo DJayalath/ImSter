@@ -1,14 +1,15 @@
+import org.imster.cli.Interpreter;
 import org.imster.cryptography.CryptoDecrypter;
 import org.imster.cryptography.CryptoEncrypter;
+import org.imster.cryptography.CryptoException;
 import org.imster.imageio.ImageReader;
 import org.imster.imageio.ImageWriter;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +32,38 @@ class MainTest {
         } catch (FileNotFoundException e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    void testCLIEncodeDecode() {
+
+        Interpreter.DEBUG_MODE = true;
+
+        String[] args = new String[]{"encode", "-i", resourceDirectory + "/rgb.png", "-o",
+                resourceDirectory + "/cliOUT.png", "-m", message, "-p", password};
+
+        Interpreter interpreter = new Interpreter(args);
+        try {
+            interpreter.parse();
+            interpreter.execute();
+        } catch (IOException | CryptoException exception) {
+            fail(exception.getMessage());
+        }
+
+        args = new String[]{"decode", "-i", resourceDirectory + "/cliOUT.png", "-p", password};
+
+        interpreter = new Interpreter(args);
+        try {
+            interpreter.parse();
+            String decrypted = interpreter.execute();
+
+            assertEquals(decrypted, message);
+
+        } catch (IOException | CryptoException exception) {
+            fail(exception.getMessage());
+        }
+
+        Interpreter.DEBUG_MODE = false;
     }
 
     @Test
