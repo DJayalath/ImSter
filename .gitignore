@@ -3,5 +3,6 @@ out
 .idea
 *.png
 !images/*.png
+!src/test/resources/*.png
 *.iml
 *.xml
