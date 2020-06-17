@@ -1,8 +1,8 @@
-package views;
+package org.imster.views;
 
-import cryptography.CryptoEncrypter;
-import cryptography.CryptoException;
-import imageio.ImageWriter;
+import org.imster.cryptography.CryptoEncrypter;
+import org.imster.cryptography.CryptoException;
+import org.imster.imageio.ImageWriter;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;

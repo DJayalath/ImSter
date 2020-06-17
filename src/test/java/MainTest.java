@@ -1,7 +1,7 @@
-import cryptography.CryptoDecrypter;
-import cryptography.CryptoEncrypter;
-import imageio.ImageReader;
-import imageio.ImageWriter;
+import org.imster.cryptography.CryptoDecrypter;
+import org.imster.cryptography.CryptoEncrypter;
+import org.imster.imageio.ImageReader;
+import org.imster.imageio.ImageWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

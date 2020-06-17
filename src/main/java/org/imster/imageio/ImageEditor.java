@@ -1,4 +1,4 @@
-package imageio;
+package org.imster.imageio;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

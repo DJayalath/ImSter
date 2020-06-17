@@ -1,4 +1,4 @@
-package imageio;
+package org.imster.imageio;
 
 import java.io.File;
 import java.io.IOException;

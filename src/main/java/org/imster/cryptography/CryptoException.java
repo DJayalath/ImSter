@@ -1,4 +1,4 @@
-package cryptography;
+package org.imster.cryptography;
 
 /* Manages un-salvageable exceptions from cryptographic operations */
 public class CryptoException extends Exception {

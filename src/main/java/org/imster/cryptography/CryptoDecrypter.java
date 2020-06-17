@@ -1,4 +1,4 @@
-package cryptography;
+package org.imster.cryptography;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

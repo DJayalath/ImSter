@@ -1,4 +1,4 @@
-package views;
+package org.imster.views;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

@@ -1,4 +1,4 @@
-package cryptography;
+package org.imster.cryptography;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;

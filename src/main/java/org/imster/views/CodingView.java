@@ -1,4 +1,4 @@
-package views;
+package org.imster.views;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
