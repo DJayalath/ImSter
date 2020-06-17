@@ -25,7 +25,16 @@ public class ImageEditor {
             throw new IOException("Missing path for input image");
 
         image = ImageIO.read(imageFile);
-        pixelBuffer = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+
+        // Provide support for indexed PNGs by converting into ABGR format
+        if (image.getType() == BufferedImage.TYPE_BYTE_INDEXED) {
+            BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+            convertedImage.createGraphics().drawRenderedImage(image, null);
+            pixelBuffer = ((DataBufferByte) convertedImage.getRaster().getDataBuffer()).getData();
+            image = convertedImage;
+        } else {
+            pixelBuffer = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+        }
 
     }
 
