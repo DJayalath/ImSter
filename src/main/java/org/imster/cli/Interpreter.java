@@ -51,7 +51,7 @@ public class Interpreter {
             ImageWriter imageWriter = new ImageWriter(inputFile, outputFile);
             imageWriter.writeString(encryptedMessage);
             if (!DEBUG_MODE)
-                System.out.println("Successfully encoded message");
+                System.out.println("Successfully encoded message to " + outputFile.getName());
         } else if (mode == DECODE_MODE) {
             ImageReader imageReader = new ImageReader(inputFile);
             String decodedMessage = imageReader.readString();
