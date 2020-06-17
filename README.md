@@ -39,10 +39,10 @@ While many solutions exist for securely encrypting data, ImSter serves a slightl
 - Operating System: Windows/Linux/Mac OS
 - Java Version: 1.8+ (i.e. JRE 8+)
 - File Format: PNG (files should also have `.png` extension)
-- Colour Space: RGB/Grayscale
+- Colours: RGB/RGBA/Grayscale/Grayscale + Alpha
+- PNG Types: Non-Interleaved/Interleaved
 
-Note: RGBA, Indexed, Interleaved, Grayscale + Alpha are all unsupported. I plan on introducing
-support for some of these types where possible (starting with alpha channels) in the future.
+Note: PNG type Indexed/Colormap is currently unsupported
 
 ## [License](LICENSE)
 
