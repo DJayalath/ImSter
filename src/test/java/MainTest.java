@@ -137,4 +137,42 @@ class MainTest {
 
     }
 
+    @Test
+    void writeReadImageWhite() {
+        try {
+            String message = MainTest.message.substring(0, MainTest.message.length() / 16);
+
+            cryptoEncrypter = new CryptoEncrypter();
+            imageWriter = new ImageWriter(new File(resourceDirectory + "/white.png"), new File(resourceDirectory + "/whiteOUT.png"));
+            String encrypted = cryptoEncrypter.encryptString(message, password);
+            imageWriter.writeString(encrypted);
+            imageReader = new ImageReader(new File(resourceDirectory + "/whiteOUT.png"));
+            String decoded = imageReader.readString();
+            cryptoDecrypter = new CryptoDecrypter();
+            String decrypted = cryptoDecrypter.decryptString(decoded, password);
+            assertEquals(message, decrypted);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void writeReadImageBlack() {
+        try {
+            String message = MainTest.message.substring(0, MainTest.message.length() / 16);
+
+            cryptoEncrypter = new CryptoEncrypter();
+            imageWriter = new ImageWriter(new File(resourceDirectory + "/black.png"), new File(resourceDirectory + "/blackOUT.png"));
+            String encrypted = cryptoEncrypter.encryptString(message, password);
+            imageWriter.writeString(encrypted);
+            imageReader = new ImageReader(new File(resourceDirectory + "/blackOUT.png"));
+            String decoded = imageReader.readString();
+            cryptoDecrypter = new CryptoDecrypter();
+            String decrypted = cryptoDecrypter.decryptString(decoded, password);
+            assertEquals(message, decrypted);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
 }
