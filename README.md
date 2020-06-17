@@ -23,7 +23,7 @@ To see for yourself, download the image on the right and decode it with ImSter u
 
 ## Features
 - 256-bit AES encryption using CBC encryption mode
-- Single-file multi-platform portable binary (no installation, just run the file!)
+- Single-file multi-platform portable binary (no installation, just run the file)
 - CLI and GUI
 - Lightweight (entire application is just 10MB)
 
