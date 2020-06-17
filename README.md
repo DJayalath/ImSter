@@ -32,7 +32,7 @@ While many solutions exist for securely encrypting data, ImSter serves a slightl
 3. Ensure the jar file is executable (you may need to `chmod +x ImSter-xxx.jar` on Linux/Mac OS)
 4. Run the jar file (if opening it fails, try `java -jar ImSter-xxx.jar`)
 
-*For compatibility, please download [older releases](https://github.com/armytricks/ImSter/releases)
+*For compatibility, [older releases](https://github.com/armytricks/ImSter/releases) are also available
 
 ## Command Line Interface (CLI)
 
@@ -44,6 +44,8 @@ ImSter v0.4.3+ comes integrated with a CLI. To use it, specify commands as follo
 `java -jar ImSter-xxx.jar decode -i input.png -p password`
 
 The decoded message goes to stdout. Any errors encountered will be sent to stderr.
+
+For examples of usage in scripts for bulk encryption/decryption see the [examples](examples) folder.
 
 ## Requirements
 
