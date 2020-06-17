@@ -16,8 +16,7 @@ public class ImageEditor {
 
     protected final byte[] pixelBuffer;
 
-    protected final int imageWidth;
-    protected final int imageHeight;
+    protected BufferedImage image;
 
     /* Reads supplied image file into pixel buffer */
     public ImageEditor(File imageFile) throws IOException {
@@ -25,9 +24,7 @@ public class ImageEditor {
         if (imageFile == null)
             throw new IOException("Missing path for input image");
 
-        BufferedImage image = ImageIO.read(imageFile);
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        image = ImageIO.read(imageFile);
         pixelBuffer = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 
     }
