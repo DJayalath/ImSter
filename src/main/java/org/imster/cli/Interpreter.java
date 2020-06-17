@@ -85,22 +85,22 @@ public class Interpreter {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-i":
-                    if (i + 1 > args.length)
+                    if (i + 1 >= args.length)
                         throw new IllegalArgumentException("Expected argument after -i but none found");
                     input = args[i + 1];
                     break;
                 case "-o":
-                    if (i + 1 > args.length)
+                    if (i + 1 >= args.length)
                         throw new IllegalArgumentException("Expected argument after -o but none found");
                     output = args[i + 1];
                     break;
                 case "-m":
-                    if (i + 1 > args.length)
+                    if (i + 1 >= args.length)
                         throw new IllegalArgumentException("Expected argument after -m but none found");
                     message = args[i + 1];
                     break;
                 case "-p":
-                    if (i + 1 > args.length)
+                    if (i + 1 >= args.length)
                         throw new IllegalArgumentException("Expected argument after -p but none found");
                     password = args[i + 1];
                     break;
