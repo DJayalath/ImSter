@@ -11,9 +11,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
 
-        for (String a : args)
-            System.out.println(a);
-
         // If no arguments provided, default to GUI
         if (args.length == 0)
             TopView.initialise(args);
