@@ -1,6 +1,6 @@
 # ImSter - <ins>Im</ins>age <ins>St</ins>eganograph<ins>er</ins>
 
-ImSter is a tool that lets you hide and view text inside images securely. 
+ImSter is a tool that lets you hide and view encrypted text inside images securely. 
 
 <p align="center">
 <img src=images/mainView.png alt="Main GUI view">
