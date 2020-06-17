@@ -16,7 +16,6 @@ public abstract class CryptoResource {
     private static final String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5PADDING";
     private static final String KEY_FACTORY_ALGORITHM = "PBKDF2WithHmacSHA256";
     protected static final String KEY_SPEC_ALGORITHM = "AES";
-    protected static final String RANDOM_SECURE_ALGORITHM = "SHA1PRNG";
 
     protected final Cipher cipher;
     protected final SecretKeyFactory secretKeyFactory;
