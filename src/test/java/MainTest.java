@@ -27,7 +27,8 @@ class MainTest {
 
     @BeforeAll
     static void setUp() {
-        try (Scanner scanner = new Scanner( new File(resourceDirectory + "/macbeth.txt"), "UTF-8" )) {
+        try (Scanner scanner = new Scanner(
+                new File(resourceDirectory + "/macbeth.txt"), "UTF-8" )) {
             message = scanner.useDelimiter("\\A").next();
         } catch (FileNotFoundException e) {
             fail(e.getMessage());
