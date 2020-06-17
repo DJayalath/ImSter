@@ -25,14 +25,25 @@ To see for yourself, download the image on the right and decode it with ImSter u
 While many solutions exist for securely encrypting data, ImSter serves a slightly different purpose. The purpose
  of ImSter is to keep the fact that your information even exists confidential, in addition to providing security through encryption.
  
- ## Quick Start
+## Quick Start
 
 1. Download the latest [release](https://github.com/armytricks/ImSter/releases/latest)*
 2. Make sure you have Java installed (at least JRE)
 3. Ensure the jar file is executable (you may need to `chmod +x ImSter-xxx.jar` on Linux/Mac OS)
 4. Run the jar file (if opening it fails, try `java -jar ImSter-xxx.jar`)
 
-*For compatibility reasons, you can also download [older releases](https://github.com/armytricks/ImSter/releases)
+*For compatibility, please download [older releases](https://github.com/armytricks/ImSter/releases)
+
+## Requirements
+
+- Operating System: Windows/Linux/Mac OS
+- Java Version: 1.8+ (i.e. JRE 8+)
+- File Format: PNG (files should also have `.png` extension)
+- Colour Space: RGB/Grayscale
+
+Note: RGBA, Indexed, Interleaved, Grayscale + Alpha are all unsupported. I plan on introducing
+support for some of these types where possible (starting with alpha channels) in the future.
+
 ## [License](LICENSE)
 
 <!---
