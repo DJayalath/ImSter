@@ -7,7 +7,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
@@ -30,8 +29,11 @@ public class CryptoEncrypter extends CryptoResource {
 
         try {
 
+            // Don't specify SHA1PRNG it is not an implementation requirement of the JVM
+            // Allow implementation to use most preferred (secure) provider
+            SecureRandom randomSecureRandom = new SecureRandom();
+
             // Generate salt
-            SecureRandom randomSecureRandom = SecureRandom.getInstance(RANDOM_SECURE_ALGORITHM);
             byte[] salt = new byte[SALT_SIZE];
             randomSecureRandom.nextBytes(salt);
 
@@ -77,10 +79,6 @@ public class CryptoEncrypter extends CryptoResource {
             throw cryptoException;
         } catch (InvalidKeySpecException e) {
             CryptoException cryptoException = new CryptoException("Invalid key specification supplied");
-            cryptoException.initCause(e);
-            throw cryptoException;
-        } catch (NoSuchAlgorithmException e) {
-            CryptoException cryptoException = new CryptoException("No such algorithm for secure random");
             cryptoException.initCause(e);
             throw cryptoException;
         }
