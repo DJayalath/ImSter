@@ -37,6 +37,8 @@ public class Body {
     private final TextArea textArea;
     private final ProgressBar progressBar;
 
+    private final TextField selectedInText, selectedOutText;
+
     private boolean encodeMode = false;
 
     private File imageIn = null;
@@ -52,11 +54,14 @@ public class Body {
         root.setVgap(ROOT_V_GAP);
         root.setHgap(ROOT_H_GAP);
 
+        selectedInText = new TextField();
+        selectedOutText = new TextField();
+
         GridPane inputSelectionPane = buildSelectionPane(
-                "Input selection", Pos.CENTER_LEFT, this::runFileInputDialog);
+                "Input selection", Pos.CENTER_LEFT, true);
 
         outputSelectionPane = buildSelectionPane(
-                "Output selection", Pos.CENTER_RIGHT, this::runFileOutputDialog);
+                "Output selection", Pos.CENTER_RIGHT, false);
 
         textArea = new TextArea();
         textArea.setWrapText(true);
@@ -82,6 +87,7 @@ public class Body {
     /* Transitions view to encode mode */
     public void encodeMode() {
         if (!encodeMode) {
+            clearSelections();
             root.add(outputSelectionPane, 1, 0);
             textArea.clear();
             textArea.setEditable(true);
@@ -93,12 +99,21 @@ public class Body {
     /* Transitions view to decode mode */
     public void decodeMode() {
         if (encodeMode) {
+            clearSelections();
             root.getChildren().remove(outputSelectionPane);
             textArea.clear();
             textArea.setEditable(false);
             textArea.setPromptText(null);
             encodeMode = false;
         }
+    }
+
+    /* Clears any image selections */
+    private void clearSelections() {
+        imageIn = null;
+        selectedInText.clear();
+        imageOut = null;
+        selectedOutText.clear();
     }
 
     /* Runs the operation dictated by the mode (encode/decode) */
@@ -272,15 +287,19 @@ public class Body {
     }
 
     /* Builds a generic file selection pane */
-    protected GridPane buildSelectionPane(String label, Pos alignment, FileDialogRunner clickFunction) {
+    protected GridPane buildSelectionPane(String label, Pos alignment, boolean in) {
         Label selectionLabel = new Label(label);
         selectionLabel.setFont(new Font(SELECTION_LABEL_SIZE));
 
-        TextField selectedText = new TextField();
-        selectedText.setDisable(true);
-
         Button selectButton = new Button("SELECT");
-        selectButton.setOnMouseClicked(e -> clickFunction.runFileDialog(selectedText));
+
+        if (in) {
+            selectedInText.setDisable(true);
+            selectButton.setOnMouseClicked(e -> runFileInputDialog(selectedInText));
+        } else {
+            selectedOutText.setDisable(true);
+            selectButton.setOnMouseClicked(e -> runFileOutputDialog(selectedOutText));
+        }
 
         GridPane selectionPane = new GridPane();
         selectionPane.setAlignment(alignment);
@@ -288,7 +307,7 @@ public class Body {
         selectionPane.setHgap(SELECTION_H_GAP);
 
         selectionPane.add(selectionLabel, 0, 0, 2, 1);
-        selectionPane.add(selectedText, 0, 1);
+        selectionPane.add((in) ? selectedInText : selectedOutText, 0, 1);
         selectionPane.add(selectButton, 1, 1);
 
         return selectionPane;
