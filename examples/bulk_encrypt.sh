@@ -6,7 +6,7 @@
 # $2 = folder containing png files
 # $3 = password
 
-for file in $2*.png
+for file in $2/*.png
 do
     echo -n "Enter message for $(basename $file): "
     read answer
