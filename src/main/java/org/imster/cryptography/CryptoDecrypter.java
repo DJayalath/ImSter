@@ -26,6 +26,12 @@ public class CryptoDecrypter extends CryptoResource {
     /* Decrypts plaintext string with password */
     public String decryptString(String ciphertext, String password) throws IOException, CryptoException {
 
+        if (ciphertext.isEmpty())
+            throw new IOException("Message is blank");
+
+        if (password.isEmpty())
+            throw new IOException("Missing password to decrypt");
+
         try {
 
             // B64 decode the ciphertext

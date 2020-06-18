@@ -27,6 +27,9 @@ public class CryptoEncrypter extends CryptoResource {
         if (plaintext.isEmpty())
             throw new IOException("Missing message to encrypt");
 
+        if (password.isEmpty())
+            throw new IOException("Missing password to encrypt");
+
         try {
 
             // Don't specify SHA1PRNG it is not an implementation requirement of the JVM
