@@ -1,4 +1,4 @@
-package org.imster.views;
+package org.imster.gui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /* GUI view for top menu and JavaFX entry point */
-public class TopView extends Application {
+public class MenuBar extends Application {
 
     private static final String MAIN_WINDOW_TITLE = "ImSter v0.4.4 Alpha";
 
@@ -72,13 +72,12 @@ public class TopView extends Application {
 
         topSeparator.prefWidthProperty().bind(rootPane.widthProperty());
 
-        CodingView encodeView = new EncodeView(stage);
-        CodingView decodeView = new DecodeView(stage);
+        Body body = new Body(stage);
 
-        rootPane.setCenter(encodeView.getRoot());
+        rootPane.setCenter(body.getRoot());
 
-        encodeMode.setOnMouseClicked(e -> rootPane.setCenter(encodeView.getRoot()));
-        decodeMode.setOnMouseClicked(e -> rootPane.setCenter(decodeView.getRoot()));
+        encodeMode.setOnMouseClicked(e -> body.encodeMode());
+        decodeMode.setOnMouseClicked(e -> body.decodeMode());
 
         Scene scene = new Scene(rootPane);
         stage.setScene(scene);
