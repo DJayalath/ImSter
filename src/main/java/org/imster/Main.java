@@ -1,9 +1,9 @@
 package org.imster;
 
+import javafx.application.Platform;
 import org.imster.cli.Interpreter;
 import org.imster.cryptography.CryptoException;
-import org.imster.views.CodingView;
-import org.imster.views.TopView;
+import org.imster.gui.MenuBar;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Main {
 
         // If no arguments provided, default to GUI
         if (args.length == 0)
-            TopView.initialise(args);
+            MenuBar.initialise(args);
         else {
             // Pass arguments to CLI interpreter
             try {
@@ -25,8 +25,19 @@ public class Main {
                 Interpreter.printUsage();
                 System.exit(1);
             } catch (CryptoException e) {
-                CodingView.handleFatalException(e);
+                handleFatalException(e);
             }
         }
+    }
+
+    /* Handles fatal exceptions within Application thread */
+    public static void handleFatalException(Throwable e) {
+        System.err.println("FATAL ERROR: " + e.getMessage());
+        if (e.getCause() != null)
+            System.err.println("\nINIT CAUSE: " + e.getCause().getMessage());
+        System.err.println("\n----- STACK TRACE -----");
+        e.printStackTrace();
+        Platform.exit();
+        System.exit(1);
     }
 }
