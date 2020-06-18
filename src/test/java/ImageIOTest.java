@@ -10,8 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ImageIOTest {
 
@@ -25,6 +24,46 @@ public class ImageIOTest {
         } catch (FileNotFoundException e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    void missingInputTest() {
+        assertThrows(IOException.class, () -> new ImageReader(null));
+        assertThrows(IOException.class, () -> new ImageWriter(null,
+                new File(MainTest.resourceDirectory + "/rgbIOTestOUT.png")));
+        assertThrows(IOException.class, () -> new ImageWriter(
+                new File(MainTest.resourceDirectory + "/rgb.png"), null));
+    }
+
+    @Test
+    void noMessageFoundTest() {
+        File in = new File(MainTest.resourceDirectory + "/grayscale.png");
+        ImageReader imageReader = null;
+
+        try {
+             imageReader = new ImageReader(in);
+        } catch (IOException ioException) {
+            fail(ioException.getMessage());
+        }
+
+        ImageReader imageReader1 = imageReader;
+
+        assertThrows(IOException.class, imageReader1::readString);
+    }
+
+    @Test
+    void messageTooLongTest() {
+        File in = new File(MainTest.resourceDirectory + "/indexed.png");
+        File out = new File(MainTest.resourceDirectory + "/indexedOUT.png");
+        ImageWriter imageWriter = null;
+        try {
+            imageWriter = new ImageWriter(in, out);
+        } catch (IOException ioException) {
+            fail(ioException.getMessage());
+        }
+
+        ImageWriter imageWriter1 = imageWriter;
+        assertThrows(IOException.class, () -> imageWriter1.writeString(message));
     }
 
     @Test
