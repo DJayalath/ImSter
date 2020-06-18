@@ -51,16 +51,22 @@ While many solutions exist for securely encrypting data, ImSter serves a slightl
 
 ## Command Line Interface (CLI)
 
-ImSter v0.4.3+ comes integrated with a CLI. To use it, specify commands as follows:
+ImSter v0.4.3+ comes integrated with a CLI. For examples of usage in scripts for bulk encryption/decryption see the [examples](examples) folder.
+
+To use it, specify commands as follows:
 
 #### Encoding
 `java -jar ImSter-xxx.jar encode -i input.png -o output.png -m "message" -p password`
 #### Decoding
 `java -jar ImSter-xxx.jar decode -i input.png -p password`
 
-The decoded message goes to stdout. Any errors encountered will be sent to stderr.
+#### Legacy Support
 
-For examples of usage in scripts for bulk encryption/decryption see the [examples](examples) folder.
+To use legacy mode, supply the `-l` switch
+
+#### Output
+
+The decoded message goes to stdout. Any errors encountered will be sent to stderr.
 
 ## Requirements
 
