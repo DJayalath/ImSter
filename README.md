@@ -12,9 +12,9 @@ an image.
 
 ## Contents
 - [Demo](#demo)
+- [Quick Start](#quick-start)
 - [Features](#features)
 - [Purpose](#purpose)
-- [Quick Start](#quick-start)
 - [Command Line Interface (CLI)](#command-line-interface-cli)
 - [Requirements](#requirements)
 - [License](#license)
@@ -30,6 +30,15 @@ Original Image            |  Image with Macbeth
 
 To see for yourself, download the image on the right and decode it with ImSter using the password `ronyon`.
 
+## Quick Start
+
+1. Download the latest [release](https://github.com/armytricks/ImSter/releases/latest)*
+2. Make sure you have Java installed (at least JRE)
+3. Ensure the jar file is executable (you may need to `chmod +x ImSter-xxx.jar` on Linux/Mac OS)
+4. Run the jar file (if opening it fails, try `java -jar ImSter-xxx.jar`)
+
+*For compatibility, [older releases](https://github.com/armytricks/ImSter/releases) are also available
+
 ## Features
 - 256-bit AES encryption using CBC encryption mode
 - Single-file multi-platform portable binary (no installation, just run the file)
@@ -39,15 +48,6 @@ To see for yourself, download the image on the right and decode it with ImSter u
 ## Purpose
 While many solutions exist for securely encrypting data, ImSter serves a slightly different purpose. The purpose
  of ImSter is to keep the fact that your information even exists confidential, in addition to providing security through encryption.
- 
-## Quick Start
-
-1. Download the latest [release](https://github.com/armytricks/ImSter/releases/latest)*
-2. Make sure you have Java installed (at least JRE)
-3. Ensure the jar file is executable (you may need to `chmod +x ImSter-xxx.jar` on Linux/Mac OS)
-4. Run the jar file (if opening it fails, try `java -jar ImSter-xxx.jar`)
-
-*For compatibility, [older releases](https://github.com/armytricks/ImSter/releases) are also available
 
 ## Command Line Interface (CLI)
 
