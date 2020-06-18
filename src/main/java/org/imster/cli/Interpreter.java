@@ -164,9 +164,9 @@ public class Interpreter {
     /* Help function to show user usage. Called on argument errors */
     public static void printUsage() {
         System.out.println("\n\033[0;1mUSAGE");
-        System.out.println("\n  ---------- Encoding ----------\033[0;0m\n");
+        System.out.println("\n    ENCODING\033[0;0m\n");
         System.out.println("        java -jar ImSter-xxx.jar encode -i input.png -o output.png -m \"message\" -p password");
-        System.out.println("\n  \033[0;1m---------- Decoding ----------\033[0;0m\n");
+        System.out.println("\n\033[0;1m    DECODING\033[0;0m\n");
         System.out.println("        java -jar ImSter-xxx.jar decode -i input.png -p password\n");
     }
 
