@@ -1,6 +1,7 @@
 import org.imster.cryptography.CryptoDecrypter;
 import org.imster.cryptography.CryptoEncrypter;
 import org.imster.cryptography.CryptoException;
+import org.imster.cryptography.CryptoResource;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -51,7 +52,29 @@ public class CryptoTest {
     }
 
     @Test
-    void encryptDecryptTest() {
+    void legacyEncryptDecryptTest() {
+
+        CryptoResource.USE_LEGACY_CBC = true;
+
+        String message = "test message";
+        String password = "test password";
+
+        try {
+            CryptoEncrypter cryptoEncrypter = new CryptoEncrypter();
+            String encryptedString = cryptoEncrypter.encryptString(message, password);
+            CryptoDecrypter cryptoDecrypter = new CryptoDecrypter();
+            String decryptedMessage = cryptoDecrypter.decryptString(encryptedString, password);
+            assertEquals(message, decryptedMessage);
+        } catch (CryptoException | IOException e) {
+            fail(e.getMessage());
+        }
+
+        CryptoResource.USE_LEGACY_CBC = false;
+
+    }
+
+    @Test
+    void EncryptDecryptTest() {
 
         String message = "test message";
         String password = "test password";
