@@ -59,6 +59,7 @@ public class Body {
                 "Output selection", Pos.CENTER_RIGHT, this::runFileOutputDialog);
 
         textArea = new TextArea();
+        textArea.setWrapText(true);
 
         progressBar = new ProgressBar(0);
 
