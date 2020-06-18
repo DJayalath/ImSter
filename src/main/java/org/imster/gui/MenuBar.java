@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 /* GUI view for top menu and JavaFX entry point */
 public class MenuBar extends Application {
 
-    private static final String MAIN_WINDOW_TITLE = "ImSter v0.4.4 Alpha";
+    private static final String MAIN_WINDOW_TITLE = "ImSter v1.0.0";
 
     public static void initialise(String[] args) {
         launch(args);
