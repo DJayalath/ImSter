@@ -40,7 +40,8 @@ To see for yourself, download the image on the right and decode it with ImSter u
 *For compatibility, [older releases](https://github.com/armytricks/ImSter/releases) are also available
 
 ## Features
-- 256-bit AES encryption using CBC encryption mode
+- 256-bit AES encryption
+- AEAD using GCM encryption mode
 - Single-file multi-platform portable binary (no installation, just run the file)
 - CLI and GUI
 - Lightweight (entire application is just 10MB)
