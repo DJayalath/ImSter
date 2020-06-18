@@ -3,6 +3,7 @@ package org.imster.cli;
 import org.imster.cryptography.CryptoDecrypter;
 import org.imster.cryptography.CryptoEncrypter;
 import org.imster.cryptography.CryptoException;
+import org.imster.cryptography.CryptoResource;
 import org.imster.imageio.ImageReader;
 import org.imster.imageio.ImageWriter;
 
@@ -104,6 +105,8 @@ public class Interpreter {
                         throw new IllegalArgumentException("Expected argument after -p but none found");
                     password = args[i + 1];
                     break;
+                case "-l":
+                    CryptoResource.USE_LEGACY_CBC = true;
             }
         }
 
@@ -168,6 +171,7 @@ public class Interpreter {
         System.out.println("        java -jar ImSter-xxx.jar encode -i input.png -o output.png -m \"message\" -p password");
         System.out.println("\n\033[0;1m    DECODING\033[0;0m\n");
         System.out.println("        java -jar ImSter-xxx.jar decode -i input.png -p password\n");
+        System.out.println("    NOTE: You may provided the -l switch to use legacy mode");
     }
 
 }
