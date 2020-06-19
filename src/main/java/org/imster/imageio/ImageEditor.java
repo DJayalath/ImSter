@@ -24,7 +24,9 @@ public class ImageEditor {
         if (imageFile == null)
             throw new IOException("Missing path for input image");
 
-        image = ImageIO.read(imageFile);
+        if ((image = ImageIO.read(imageFile)) == null) {
+            throw new IOException("Failed to read " + imageFile.getName());
+        }
 
         // Provide support for indexed PNGs by converting into ABGR format
         if (image.getType() == BufferedImage.TYPE_BYTE_INDEXED) {
