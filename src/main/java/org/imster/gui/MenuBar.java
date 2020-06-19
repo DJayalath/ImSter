@@ -17,7 +17,7 @@ import org.imster.cryptography.CryptoResource;
 /* GUI view for top menu and JavaFX entry point */
 public class MenuBar extends Application {
 
-    private static final String MAIN_WINDOW_TITLE = "ImSter v1.1.0";
+    private static final String MAIN_WINDOW_TITLE = "ImSter v1.1.1";
 
     public static void initialise(String[] args) {
         launch(args);
