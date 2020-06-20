@@ -7,7 +7,7 @@ ImSter is a tool that lets you hide and view encrypted text inside images secure
  </p>
 
 Text is password encrypted using 256-bit AES and encoded into the pixels of the image themselves
-rather than any metadata. It is impossible for anyone to even know that there is hidden content within
+rather than any metadata. It is impossible for anyone to tell by eye that there is hidden content within
 an image.
 
 ## Contents
@@ -48,7 +48,7 @@ To see for yourself, download the image on the right and decode it with ImSter u
 
 ## Purpose
 While many solutions exist for securely encrypting data, ImSter serves a slightly different purpose. The purpose
- of ImSter is to keep the fact that your information even exists confidential, in addition to providing security through encryption.
+ of ImSter is to attemp to keep the fact that your information even exists confidential, in addition to providing security through encryption. Note that even though the data inside is secure, LSB toggling is a common technique, and as such the knowledge of the existance of this data is susceptable to steganalysis techniques that may detect the bit-patterns produced by the encryption algorithms used.
 
 ## Command Line Interface (CLI)
 
