@@ -175,7 +175,7 @@ public class Interpreter {
         System.out.println("        java -jar ImSter-xxx.jar encode -i input.png -o output.png -m \"message\" -p password");
         System.out.println("\n\033[0;1m    DECODING\033[0;0m\n");
         System.out.println("        java -jar ImSter-xxx.jar decode -i input.png -p password\n");
-        System.out.println("    NOTE: You may provided the -l switch to use legacy mode");
+        System.out.println("    NOTE: You may provided the -l switch to use legacy mode\n");
     }
 
 }
