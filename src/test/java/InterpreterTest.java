@@ -140,6 +140,48 @@ public class InterpreterTest {
     }
 
     @Test
+    void cliJPGEncodeDecodeTest() {
+
+        String message = "test message";
+        String password = "test password";
+
+        String[] args = new String[]{"encode", "-i", MainTest.resourceDirectory + "/jpeg.jpg", "-o",
+                MainTest.resourceDirectory + "/jpegOUT.png", "-m", message, "-p", password};
+
+        Interpreter interpreter = new Interpreter(args);
+        try {
+            interpreter.parse();
+            interpreter.execute();
+        } catch (IOException | CryptoException exception) {
+            fail(exception.getMessage());
+        }
+
+        args = new String[]{"decode", "-i", MainTest.resourceDirectory + "/jpegOUT.png", "-p", password};
+
+        interpreter = new Interpreter(args);
+        try {
+            interpreter.parse();
+            String decrypted = interpreter.execute();
+
+            assertEquals(decrypted, message);
+
+        } catch (IOException | CryptoException exception) {
+            fail(exception.getMessage());
+        }
+
+    }
+
+    @Test
+    void cliJPGDecodeTest() {
+        String password = "test password";
+
+        String[] args = new String[]{"decode", "-i", MainTest.resourceDirectory + "/jpeg.jpg", "-p", password};
+
+        Interpreter interpreter = new Interpreter(args);
+        assertThrows(IOException.class, interpreter::parse);
+    }
+
+    @Test
     void cliLegacyEncodeDecodeTest() {
 
         String message = "test message";
