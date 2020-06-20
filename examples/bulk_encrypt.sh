@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Encrypts every picture in a given folder with a message and password
+# Encrypts every PNG picture (by overwrite) in a given folder with a message and password
 
 # $1 = path to ImSter jar
 # $2 = folder containing png files

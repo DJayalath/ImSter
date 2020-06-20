@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Decrypts every picture in a given folder assuming they all have the same password
+# Decrypts every PNG picture in a given folder assuming they all have the same password
 
 # $1 = path to ImSter jar
 # $2 = folder containing png files
