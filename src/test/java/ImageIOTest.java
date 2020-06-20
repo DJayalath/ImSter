@@ -139,4 +139,24 @@ public class ImageIOTest {
 
     }
 
+    @Test
+    void readWriteJPGTest() {
+
+        File in = new File(MainTest.resourceDirectory + "/jpeg.jpg");
+        File out = new File(MainTest.resourceDirectory + "/jpegOUT.png");
+
+        try {
+
+            ImageWriter imageWriter = new ImageWriter(in, out);
+            imageWriter.writeString(message);
+            ImageReader imageReader = new ImageReader(out);
+            String decoded = imageReader.readString();
+
+            assertEquals(message, decoded);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+    }
+
 }
