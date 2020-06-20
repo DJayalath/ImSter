@@ -21,7 +21,7 @@ public class Main {
                 interpreter.parse();
                 interpreter.execute();
             }  catch (IllegalArgumentException | IOException e) {
-                System.err.println("ERROR: " + e.getMessage());
+                System.err.println("\nERROR: " + e.getMessage());
                 Interpreter.printUsage();
                 System.exit(1);
             } catch (CryptoException e) {

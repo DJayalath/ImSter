@@ -121,8 +121,10 @@ public class Interpreter {
                 throw new IOException("Specified input path/file doesn't exist");
             } else if (!inputFile.isFile()) {
                 throw new IOException("Specified input path/file isn't a file");
-            } else if (!inputFile.getName().endsWith(".png")) {
-                throw new IOException("Specified input path/file does not have .png extension");
+            } else if (mode == ENCODE_MODE && !inputFile.getName().matches(".*\\.(png|PNG|jpg|JPG|jpeg|JPEG)")) {
+                throw new IOException("Specified input path/file does not have a standard png or jpg extension");
+            } else if (mode == DECODE_MODE && !inputFile.getName().matches(".*\\.(png|PNG)")) {
+                throw new IOException("Specified input path/file does not have a standard png extension");
             } else if (!inputFile.canRead()) {
                 throw new IOException("No read permission for specified input path/file");
             }
@@ -134,6 +136,8 @@ public class Interpreter {
             outputFile = new File(output);
             if (!isValidPath(output)) {
                 throw new IOException("Specified output path is invalid");
+            } else if (!outputFile.getName().endsWith(".png")) {
+                throw new IOException("Specified output file must have .png extension");
             }
         } else if (mode == ENCODE_MODE) {
             throw new IllegalArgumentException("Output image path not set. Use -o to set it");
@@ -171,7 +175,7 @@ public class Interpreter {
         System.out.println("        java -jar ImSter-xxx.jar encode -i input.png -o output.png -m \"message\" -p password");
         System.out.println("\n\033[0;1m    DECODING\033[0;0m\n");
         System.out.println("        java -jar ImSter-xxx.jar decode -i input.png -p password\n");
-        System.out.println("    NOTE: You may provided the -l switch to use legacy mode");
+        System.out.println("    NOTE: You may provide the -l switch to use legacy mode\n");
     }
 
 }

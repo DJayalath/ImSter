@@ -172,4 +172,22 @@ class MainTest {
         }
     }
 
+    @Test
+    void readWriteImageJPG() {
+        try {
+
+            cryptoEncrypter = new CryptoEncrypter();
+            imageWriter = new ImageWriter(new File(resourceDirectory + "/jpeg.jpg"), new File(resourceDirectory + "/jpegOUT.png"));
+            String encrypted = cryptoEncrypter.encryptString(message, password);
+            imageWriter.writeString(encrypted);
+            imageReader = new ImageReader(new File(resourceDirectory + "/jpegOUT.png"));
+            String decoded = imageReader.readString();
+            cryptoDecrypter = new CryptoDecrypter();
+            String decrypted = cryptoDecrypter.decryptString(decoded, password);
+            assertEquals(message, decrypted);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
 }

@@ -318,7 +318,9 @@ public class Body {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PNG Files", "*.png"));
+                (encodeMode) ? new FileChooser.ExtensionFilter("Image Files", "*.png", "*.PNG", "*.JPG", "*.JPEG", "*.jpg", ".jpeg")
+                             : new FileChooser.ExtensionFilter("Image Files", "*.png", "*.PNG")
+        );
         File selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {

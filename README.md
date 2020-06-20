@@ -73,11 +73,13 @@ The decoded message goes to stdout. Any errors encountered will be sent to stder
 
 - Operating System: Windows/Linux/Mac OS
 - Java Version: 1.8+ (i.e. JRE 8+)
-- File Format: PNG (files should also have `.png` extension)
-- Colours: RGB/RGBA/Grayscale/Grayscale + Alpha
-- PNG Types: Non-Interleaved/Interleaved/Indexed (Colormap)
+- Encode Input: PNG*/JPEG**
+- Encode Output: PNG only (ImSter converts JPEG input to PNG for output)
+- Decode Input: PNG only
 
-Note: Indexed (Colormap) is supported by converting output to truecolor format
+*Indexed (Colormap) PNGs are supported by converting output to truecolor
+
+**JPEG is supported by converting the input into PNG
 
 ## [License](LICENSE)
 
