@@ -34,8 +34,8 @@ To see for yourself, download the image on the right and decode it with ImSter u
 
 1. Download the latest [release](https://github.com/armytricks/ImSter/releases/latest)*
 2. Make sure you have Java installed (at least JRE)
-3. Ensure the jar file is executable (you may need to `chmod +x ImSter-xxx.jar` on Linux/Mac OS)
-4. Run the jar file (if opening it fails, try `java -jar ImSter-xxx.jar`)
+3. Ensure the jar file is executable (you may need to `chmod +x ImSter-*.jar` on Linux/Mac OS)
+4. Run the jar file (if opening it fails, try `java -jar ImSter-*.jar`)
 
 *For compatibility, [older releases](https://github.com/armytricks/ImSter/releases) are also available
 
